@@ -1,5 +1,7 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./style.css";
+// 引入css reset 全局生效
+import "./assets/css/reset.less";
 
-createApp(App).mount('#app')
+createApp(App).mount("#app");
