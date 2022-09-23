@@ -1,6 +1,8 @@
 <template>
   <div class="content">
-    <div class="content-item" :key="item" v-for="item in 100">{{item}}</div>
+    <div class="content-item" :key="item" v-for="item in 100">
+      <Card :content="`我是第${item}个`"></Card>
+    </div>
   </div>
 </template>
 

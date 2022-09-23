@@ -11,11 +11,15 @@
       <button v-on:click="clickTap">派发</button>
       <button v-on:click="clickTap2">派发2</button>
     </div>
+    <Tree :data="data"></Tree>
   </div>
 </template>
 
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
+import Tree from '../../components/Tree/index.vue'
+import { TreeList } from "../../assets/type/TreeList";
+
 // 接收父组件传过来的值
 type Props = {
   title: string,
@@ -53,6 +57,35 @@ withDefaults(defineProps<Props>(), {
   // 复杂类型通过return
   data: () => [1, 1, 1, 1]
 })
+
+// 演示递归组件
+// TreeList类型以导入的方式进行
+const data = reactive<TreeList[]>([
+  {
+    name: 'no.1',
+    children: [
+      {
+        name: "no.1-1",
+        children: [
+          {
+            name: "no.1-1-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    name: 'no.2',
+    children: [
+      {
+        name: 'no.2-1'
+      }
+    ]
+  },
+  {
+    name: 'no.3'
+  }
+])
 </script>
 <style lang='less' scoped>
 .Menu {
