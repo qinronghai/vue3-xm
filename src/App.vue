@@ -1,73 +1,32 @@
 <template>
   <div class="app">
-    watch侦听器
-    <input type="text" v-model="msg.name" />
-    <input type="text" v-model="msg.name2" />
+    <h1>认识watchEffect高级侦听器</h1>
+    <input v-model="message" type="text">
+    <input v-model="message2" type="text">
     <br>
-    <h2>深层次监听</h2>
-    <input type="text" v-model="msg" />
+    <button @click="stopWatch">停止监听</button>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, watch } from 'vue'
-let message = ref<string>('')
-let message2 = ref<string>('')
+import { ref, reactive, watchEffect } from 'vue'
 
-// -常规侦听一个源
-// watch(message, (newVal, oldVal) => {
-//   console.log('新的' + newVal, '旧的' + oldVal);
-// })
+let message = ref<string>("飞机")
+let message2 = ref<string>("飞机杯子")
 
-// -侦听多个源
-/* watch([message, message2], (newVal, oldVal) => {
-  // console.log('新的' + newVal, '旧的' + oldVal);
-  console.log('新的', newVal);
-  console.log('旧的', oldVal);
-}) */
-
-// -深层监听 使用ref和深度监听
-/* let msg = ref({
-  nac: {
-    bar: {
-      name: "xiaohai"
-    }
-  }
+// 高级侦听器，接收一个回调函数，把想监听的值放入到回调函数中去
+// 一进页面自动执行一次高级侦听器里面的回调函数
+// 可以在侦听触发之前先执行一些东西，需要往回调函数中传入一个回调处理函数oninvalidate
+// watchEffect会返回一个stop函数，调用它可以停止监听
+const stop = watchEffect((oninvalidate) => {
+  console.log('message===>', message.value);
+  console.log('message===>', message2.value);
+  // 清楚副作用
+  oninvalidate(() => {
+    console.log('before');
+  })
 })
-watch(msg, (newVal, oldVal) => {
-  console.log('新的', newVal);
-  console.log('旧的', oldVal);
-}, {
-  // 深度监听
-  deep: true,
-  // 默认第一次执行一次watch监听
-  immediate: true
-}) */
-
-// -使用reactive 可以不用deep
-/* let msg = reactive({
-  nac: {
-    bar: {
-      name: "xiaohai"
-    }
-  }
-})
-watch(msg, (newVal, oldVal) => {
-  console.log('新的', newVal);
-  console.log('旧的', oldVal);
-}) */
-
-// -监听单一的属性而不是全部的属性
-let msg = reactive({
-  name: '小海1',
-  name2: '小海2'
-})
-// 第一个参数变成一个函数，返回你只想要监听的值
-watch(() => msg.name, (newVal, oldVal) => {
-  console.log('新的', newVal);
-  console.log('旧的', oldVal);
-})
-
+const stopWatch = () => stop()
 </script>
 <style  scoped>
 .app {
