@@ -3,10 +3,10 @@
     {{man}}
     <hr>
     <div>
-      toRef: {{like}}
+      <!-- toRef: {{like}} -->
     </div>
     <hr>
-    {{name}}--{{age}}--{{like}}
+    <!-- {{name}}--{{age}}--{{like}} -->
     <div>
       <button @click="change">修改</button>
     </div>

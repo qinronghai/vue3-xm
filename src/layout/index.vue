@@ -1,9 +1,6 @@
 <template>
   <div class="layout">
-    <!-- 父组件给子组件传值title -->
-    <!-- 传递复杂类型 需要使用v-bind 简写为冒号 : -->
-    <!-- 通过ref拿到子组件的实例 -->
-    <Menu ref="menu" @on-click="getList" @on-click2="getList2" title="我想穿一条裤子" :data="list"></Menu>
+
     <div class="layout-right">
       <Header></Header>
       <Content></Content>
