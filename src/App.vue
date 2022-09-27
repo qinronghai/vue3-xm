@@ -1,44 +1,40 @@
 <template>
   <div class="app">
-    <h1>transition-Appear属性
-    </h1>
-    <button @click="flag = !flag">switch</button>
-    <!-- appear属性 可以设置初始接待你过渡 -->
-    <!-- 就是页面加载完成就开始动画 对应三个状态 -->
-    <!-- 也就是一进页面就开始实现动画 -->
-    <transition appear appear-from-class="from" appear-active-class="active" appear-to-class="to">
-      <div v-if="flag" class="box"></div>
-    </transition>
+    <button @click="add">ADD</button>
+    <button @click="pop">POP</button>
+    <div class="wraps">
+      <transition-group leave-active-class="animate__animated animate__lightSpeedOutRight"
+        enter-active-class="animate__animated animate__lightSpeedInLeft">
+        <div class="items" :key="item" v-for="item in list">
+          {{item}}
+        </div>
+      </transition-group>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang='ts'>
 import { ref, reactive } from 'vue'
-// 引入animate.css
 import 'animate.css'
-const flag = ref<boolean>(true)
+const list = reactive<number[]>([1, 2, 3, 4, 5, 6])
+const add = () => {
+  list.push(list.length + 1)
+}
+const pop = () => {
+  list.pop()
+}
 </script>
-<style lang="less" scoped>
+<style lang='less' scoped>
 .app {
-  .box {
-    width: 200px;
-    height: 200px;
-    background-color: red;
-  }
+  .wraps {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-all;
+    border: 1px solid #ccc;
 
-  .from {
-    width: 0;
-    height: 0;
-  }
-
-  .active {
-    transition: all 2s ease;
-  }
-
-  .to {
-    width: 200px;
-    height: 200px;
-    background-color: red;
+    .items {
+      margin: 10px;
+    }
   }
 }
 </style>
