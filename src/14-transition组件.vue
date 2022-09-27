@@ -1,9 +1,9 @@
 <template>
   <div class="app">
-    <h1>transition结合animate.css</h1>
+    <h1>transition动画组件</h1>
     <button @click="flag=!flag">switch</button>
-    <transition :duration="{enter:50,leave:500}" enter-active-class="animate__animated animate__backInDown"
-      leave-active-class="animate__animated animate__fadeOut">
+    <!-- 将需要过渡动画的元素放入transition中 -->
+    <transition name="fade">
       <div v-if="flag" class="box"></div>
     </transition>
   </div>
@@ -11,8 +11,6 @@
 
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
-// 引入animate.css
-import 'animate.css';
 const flag = ref<boolean>(true)
 </script>
 <style lang='less' scoped>
