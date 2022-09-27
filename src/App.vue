@@ -1,21 +1,68 @@
 <template>
   <div class="app">
-    <h1>transition结合animate.css</h1>
-    <button @click="flag=!flag">switch</button>
-    <transition :duration="{enter:50,leave:500}" enter-active-class="animate__animated animate__backInDown"
-      leave-active-class="animate__animated animate__fadeOut">
+    <h1>transition生命周期</h1>
+    <button @click="flag = !flag">switch</button>
+
+    <transition @before-enter="EnterFrom" @enter="EnterActive" @after-enter="EnterTo" @enter-cancelled="EnterCancel"
+      @before-leave="LeaveFrom" @leave="LeaveActive" @after-leave="LeaveTo" @leave-cancelled="LeaveCancel">
       <div v-if="flag" class="box"></div>
     </transition>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 import { ref, reactive } from 'vue'
 // 引入animate.css
-import 'animate.css';
+import 'animate.css'
+// 引入gsap
+import gsap from 'gsap'
+import { ElementNode } from '@vue/compiler-core'
 const flag = ref<boolean>(true)
+const EnterFrom = (el: Element) => {
+  gsap.set(el, {
+    width: 0,
+    height: 0
+  })
+}
+const EnterActive = (el: Element, done: gsap.Callback) => {
+  // console.log('过渡曲线')
+  // setTimeout(() => {
+  //   done()
+  // }, 3000)
+  gsap.to(el, {
+    width: 200,
+    height: 200,
+    onComplete: done
+  })
+}
+const EnterTo = (el: Element) => {
+  console.log('过渡完成')
+}
+const EnterCancel = (el: Element) => {
+  console.log('过渡效果被打断了，就会执行EnterCancel')
+}
+const LeaveFrom = (el: Element) => {
+  console.log('离开之前')
+}
+const LeaveActive = (el: Element, done: gsap.Callback) => {
+  /* console.log('离开过渡曲线')
+  setTimeout(() => {
+    done()
+  }, 3000) */
+  gsap.to(el, {
+    width: 0,
+    height: 0,
+    onComplete: done
+  })
+}
+const LeaveTo = (el: Element) => {
+  console.log('离开过渡完成')
+}
+const LeaveCancel = (el: Element) => {
+  console.log('离开过渡效果被打断了，就会执行LeaveCancel')
+}
 </script>
-<style lang='less' scoped>
+<style lang="less" scoped>
 .app {
   .box {
     width: 200px;
