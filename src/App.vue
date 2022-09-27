@@ -1,29 +1,60 @@
 <template>
   <div class="app">
-    <el-button type="primary" @click="flag=!flag">切换组件</el-button>
-    <!-- 把组件放到keep-alive中就会自动的缓存我们刚才输入的值 -->
-    <!-- include属性：只想缓存的组件名称 -->
-    <!-- exclude: 不缓存的组件 -->
-    <!-- max='10': 缓存组件最大数为10，是一个算法，会把最不常用的，旧的组件都剔除掉，只剩下十个。 -->
-    <keep-alive>
-      <A v-if="flag"></A>
-      <B v-else></B>
-    </keep-alive>
-    <!-- keep alive  -->
-    <!-- 应用场景：在B组件的输入框中写了一些值，然后切换到别的组件，如A之后再切换回B组件，发现刚刚输入的值不见了，这对于用户体验很不好。 -->
+    <h1>transition动画组件</h1>
+    <button @click="flag=!flag">switch</button>
+    <!-- 将需要过渡动画的元素放入transition中 -->
+    <transition name="fade">
+
+      <div v-if="flag" class="box"></div>
+    </transition>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
-import A from "./components/KeepAlive/A.vue";
-import B from "./components/KeepAlive/B.vue";
-
-const flag = ref<boolean>(false)
-
-
+import { ref, reactive } from 'vue'
+const flag = ref<boolean>(true)
 </script>
 <style lang='less' scoped>
 .app {
+  .box {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+  }
+
+  // 从隐藏到显示
+  .fade-enter-from {
+    // 进入之前
+    width: 0;
+    height: 0;
+    transform: rotate(360deg);
+  }
+
+  .fade-enter-active {
+    // 过渡曲线
+    transition: all 1.5s ease;
+  }
+
+  .fade-enter-to {
+    // 过渡完成
+    width: 200px;
+    height: 200px;
+  }
+
+  // 从显示到隐藏
+  .fade-leave-from {
+    width: 200px;
+    height: 200px;
+    transform: rotate(360deg);
+  }
+
+  .fade-leave-active {
+    transition: all 5s ease;
+  }
+
+  .fade-leave-to {
+    width: 0;
+    height: 0;
+  }
 }
 </style>
