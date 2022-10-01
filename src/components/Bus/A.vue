@@ -8,7 +8,7 @@
 
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
-import Bus from "../../Bus.ts";
+import Bus from "../../Bus";
 // 派发事件使用defineEmits
 const emit = defineEmits(['on-click'])
 let flag = false

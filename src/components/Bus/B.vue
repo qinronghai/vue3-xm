@@ -7,7 +7,7 @@
 
 <script setup lang='ts'>
 import { ref, reactive } from 'vue'
-import Bus from "../../Bus.ts";
+import Bus from "../../Bus";
 let Flag = ref(false)
 Bus.on('on-click', (flag: boolean) => {
   Flag.value = flag
