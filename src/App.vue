@@ -1,14 +1,15 @@
 <template>
   <div class="app">
-    <A></A>
-    <B></B>
+    <renderDom title="title" @on-click="getNum"></renderDom>
+    <div>{{Num}}</div>
   </div>
 </template>
 
 <script setup lang='ts'>
-import A from './components/Mitt/A.vue'
-import B from './components/Mitt/B.vue'
-
+import { ref, reactive } from 'vue'
+import renderDom from "./App";
+let Num = ref<number>(0)
+const getNum = (num: number) => { console.log(num); Num.value = num }
 </script>
 <style lang='less' scoped>
 .app {
