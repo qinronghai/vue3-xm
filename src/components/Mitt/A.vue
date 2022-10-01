@@ -14,6 +14,8 @@ const instance = getCurrentInstance()
 
 const emit = () => {
   instance?.proxy?.$Bus.emit('on-click', 'mitt')
+  instance?.proxy?.$Bus.emit('on-click2', 'mitt2')
+
 }
 </script>
 <style lang='less' scoped>
