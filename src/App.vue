@@ -1,15 +1,15 @@
 <template>
   <div class="app">
-    <renderDom title="title" @on-click="getNum"></renderDom>
-    <div>{{Num}}</div>
+    <button @click="change">change flag</button>
+    <div>{{flag}}</div>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive } from 'vue'
-import renderDom from "./App";
-let Num = ref<number>(0)
-const getNum = (num: number) => { console.log(num); Num.value = num }
+let flag = ref(1)
+const change = () => {
+  flag.value = flag.value + 1
+}
 </script>
 <style lang='less' scoped>
 .app {
