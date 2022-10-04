@@ -25,8 +25,26 @@ declare module "vue" {
 }
 const app = createApp(App);
 
-// 挂载全局api
+// 挂载全局
 app.config.globalProperties.$Bus = Mit;
+// filter
+type Filter = {
+  format: <T>(str: T) => string;
+};
+// 声明文件
+declare module "@vue/runtime-core" {
+  export interface ComponentCustomProperties {
+    $filters: Filter;
+    $env: string;
+  }
+}
+app.config.globalProperties.$filters = {
+  format<T>(str: T): string {
+    return `真-${str}`;
+  },
+};
+// 全局变量
+app.config.globalProperties.$env = "dev";
 app.use(ElementPlus);
 app.component("Card", Card);
 app.mount("#app");
