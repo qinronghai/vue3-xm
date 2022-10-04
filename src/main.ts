@@ -13,6 +13,10 @@ import "./style.css";
 // 引入全局组件
 import Card from "./components/Card/index.vue";
 
+// 引入Loading 插件
+import Loading from "./components/Loading";
+import { MyUse } from "./myUse";
+
 // 初始化mitt函数
 const Mit = mitt();
 
@@ -23,8 +27,11 @@ declare module "vue" {
     $Bus: typeof Mit;
   }
 }
-const app = createApp(App);
-
+export const app = createApp(App);
+// 注册插件
+// app.use(Loading);
+// 使用自己实现的MyUse
+MyUse(Loading);
 // 挂载全局
 app.config.globalProperties.$Bus = Mit;
 // filter
@@ -36,6 +43,10 @@ declare module "@vue/runtime-core" {
   export interface ComponentCustomProperties {
     $filters: Filter;
     $env: string;
+    $_loading: {
+      show: () => void;
+      hide: () => void;
+    };
   }
 }
 app.config.globalProperties.$filters = {
