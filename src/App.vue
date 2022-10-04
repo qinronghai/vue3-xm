@@ -1,21 +1,25 @@
 <template>
   <div class="app">
-    {{$filters.format('渣男')}}
-    <hr>
-    {{$env}}
+    <div class="bg">
+      <el-input class="ipt"></el-input>
+    </div>
   </div>
 </template>
 
 <script setup lang='ts'>
-import { ref, reactive, getCurrentInstance } from 'vue'
-const instance = getCurrentInstance()
-instance?.proxy?.$_loading.show()
-setTimeout(() => {
-  instance?.proxy?.$_loading.hide()
+import { ref, reactive } from 'vue'
 
-}, 5000);
 </script>
 <style lang='less' scoped>
 .app {
+  .bg {
+    .ipt {
+      width: 200px;
+
+      :deep(.el-input__inner) {
+        background-color: red;
+      }
+    }
+  }
 }
 </style>
